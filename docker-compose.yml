@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  teampass:
+    image: litded/teampass
+    restart: always
+    container_name: teampass
+    environment:
+      TZ: "Europe/Moscow"
+      VIRTUAL_HOST: 127.0.0.1
+    networks:
+      - teampass
+    ports:
+      - "80:80"
+    volumes:
+      - ./volumes/teampass:/var/www/html
+
+  team-db:
+    restart: always
+    image: mariadb
+    container_name: team-db
+    environment:
+      TZ: "Europe/Moscow"
+      MYSQL_ROOT_PASSWORD: H2G46YUDhvVb46SlWgzQ
+      MYSQL_DATABASE: teampass
+      MYSQL_PASSWORD: AmP15SFIGU55uM2zjI9l
+      MYSQL_USER: team-app
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+    networks:
+      - teampass
+
+networks:
+  teampass:
